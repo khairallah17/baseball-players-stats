@@ -29,7 +29,7 @@ const Home = () => {
 
             const result = await axios({
                 method: "get",
-                url: `http://localhost:3000/${route.toLowerCase()}`,
+                url: ` https://d805-41-250-104-244.ngrok-free.app/${route.toLowerCase()}`,
                 headers: {
                     "Content-Type": "application/json"
                 },

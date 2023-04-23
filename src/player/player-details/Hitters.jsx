@@ -23,7 +23,7 @@ const Hitters = () => {
 
                 const result = await axios({
                     method: "post",
-                    url: "http://localhost:3000/hitters",
+                    url: "https://d805-41-250-104-244.ngrok-free.app/hitters",
                     headers: {
                         "Content-Type": "application/json"
                     },
