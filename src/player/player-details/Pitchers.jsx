@@ -1,8 +1,8 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
 import { useState, useEffect } from 'react'
-import axios from 'axios'
 import { LineWave } from 'react-loader-spinner'
+import { pitchers } from '../../data/pitchers'
 
 const Pitchers = () => {
 
@@ -17,47 +17,9 @@ const Pitchers = () => {
             setLoading(false)
         }, 3000)
 
-        const fetchPlayer = async () => {
+        const pito = pitchers.filter(pitch => userId.name == pitch.Name)
 
-            try {
-    
-                const result = await axios({
-                    method: "post",
-                    url: " https://baseball-server.onrender.com//pitchers",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    data: {
-                        name: userId.name
-                    }
-                })
-
-                // const result = fetch('http://localhost:3000/pitchers',{
-                //     method: "POST",
-                //     headers: {
-                //         accept: "application/json",
-                //         "Content-Type": "application/json"
-                //     },
-                //     body: {
-                //         name: userId.name
-                //     },
-                // })
-
-                const dt = await result.data
-    
-                setData(dt)
-
-                console.log("dt ==> ",dt)
-    
-                console.log("data ==> ",data)
-    
-            } catch (err) { 
-                console.log(err.message)
-            }
-    
-        }
-
-        fetchPlayer()
+        setData(pito[0])
 
     },[])
 
@@ -88,15 +50,15 @@ const Pitchers = () => {
                             /> :
                             <>
                                 <div className="player-head text-center">
-                                    <h1 className='text-3xl font-bold'>{data[0].Name}</h1>
-                                    <h3 className=' text-gray-400 text-xl'>{data[0].Team}</h3>
+                                    <h1 className='text-3xl font-bold'>{data.Name}</h1>
+                                    <h3 className=' text-gray-400 text-xl'>{data.Team}</h3>
                                 </div>
                                 <div className="player-stats flex gap-5 justify-between w-[500px]">
                                     <div className="lift-stats">
                                         <ul className='flex flex-col gap-1'>
-                                            <li className='text-xl'> <span className='font-bold mr-1'>ERA:</span> {calculateDiff(data[0].ERA)} </li>
-                                            <li className='text-xl'> <span className='font-bold mr-1'>WHIP:</span> {calculateDiff(data[0].WHIP)} </li>
-                                            <li className='text-xl'> <span className='font-bold mr-1'>k/9:</span> {calculateDiff(data[0]["K/9"])} </li>
+                                            <li className='text-xl'> <span className='font-bold mr-1'>ERA:</span> {calculateDiff(data.ERA)} </li>
+                                            <li className='text-xl'> <span className='font-bold mr-1'>WHIP:</span> {calculateDiff(data.WHIP)} </li>
+                                            <li className='text-xl'> <span className='font-bold mr-1'>k/9:</span> {calculateDiff(data["K/9"])} </li>
                                         </ul>
                                     </div>
                                 </div>

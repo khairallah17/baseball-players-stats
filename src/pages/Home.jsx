@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { DataProvider } from '../context/counterContext';
 import DataContext from '../context/counterContext';
+import {hitters} from "../data/hitters"
+import { pitchers } from "../data/pitchers"
 
 const Home = () => {
 
@@ -21,29 +23,10 @@ const Home = () => {
 
     useEffect(() => {
 
-        console.log(route)
-
-        const fetchData = async () => {
-
-            console.log("route ==> ", route)
-
-            const result = await axios({
-                method: "get",
-                url: `https://baseball-server.onrender.com/${route.toLowerCase()}`,
-                headers: {
-                    "Content-Type": "application/json"
-                },
-            })
-
-            setData(result.data)
-
-            console.log(result.data)
-
-            console.log(data)
-
-        }
-
-        fetchData()
+        if (route == "hitters")
+            setData(hitters)
+        else if (route == "pitchers")
+            setData(pitchers)
 
     }, [route])
 

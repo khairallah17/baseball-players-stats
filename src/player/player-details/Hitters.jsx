@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { LineWave } from 'react-loader-spinner'
+import { hitters } from "../../data/hitters"
 
 const Hitters = () => {
 
@@ -17,30 +18,9 @@ const Hitters = () => {
             setLoading(false)
         }, 3000)
 
-        const fetchPlayer = async () => {
+        const hito = hitters.filter(hit => hit.Name == userId.name)
 
-            try {
-
-                const result = await axios({
-                    method: "post",
-                    url: "https://baseball-server.onrender.com/hitters",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    data: {
-                        name: userId.name
-                    }
-                })
-
-                setData(result.data)
-
-            } catch (err) { 
-                console.log(err.message)
-            }
-
-        }
-
-        fetchPlayer()
+        setData(hito[0])
 
     },[])
 
@@ -65,9 +45,9 @@ const Hitters = () => {
                             wrapperStyle={{}}
                             wrapperClass=""
                             visible={true}
-                            firstLineColor=""
-                            middleLineColor=""
-                            lastLineColor=""
+                            firstLineColor="red"
+                            middleLineColor="gray"
+                            lastLineColor="red"
                             /> :
                             <>
                                 <div className="player-head text-center">
