@@ -29,7 +29,7 @@ const Home = () => {
 
             const result = await axios({
                 method: "get",
-                url: `https://4733-196-70-0-66.ngrok-free.app/${route.toLowerCase()}`,
+                url: `https://baseball-server.onrender.com/${route.toLowerCase()}`,
                 headers: {
                     "Content-Type": "application/json"
                 },

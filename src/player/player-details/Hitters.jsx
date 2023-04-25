@@ -23,7 +23,7 @@ const Hitters = () => {
 
                 const result = await axios({
                     method: "post",
-                    url: "https://4733-196-70-0-66.ngrok-free.app/hitters",
+                    url: "https://baseball-server.onrender.com/hitters",
                     headers: {
                         "Content-Type": "application/json"
                     },

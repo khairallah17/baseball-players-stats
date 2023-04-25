@@ -23,12 +23,9 @@ const Pitchers = () => {
     
                 const result = await axios({
                     method: "post",
-                    url: " https://4733-196-70-0-66.ngrok-free.app/pitchers",
+                    url: " https://baseball-server.onrender.com//pitchers",
                     headers: {
-                        "Content-Type": "application/json",
-                        "Access-Control-Allow-Origin": "*",
-                        "Access-Control-Allow-Methods": "*",
-                        "Access-Control-Allow-Headers": "*"
+                        "Content-Type": "application/json"
                     },
                     data: {
                         name: userId.name
