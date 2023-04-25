@@ -1,12 +1,18 @@
-import React from 'react'
-import { useParams } from 'react-router-dom'
+import React, { useContext } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { LineWave } from 'react-loader-spinner'
 import { pitchers } from '../../data/pitchers'
+import DataContext from '../../context/counterContext'
+import FixedCounter from '../../components/FixedCounter'
 
 const Pitchers = () => {
 
     const userId = useParams()
+
+    const navigate = useNavigate
+
+    const {error, setError} = useContext(DataContext)
 
     const [data, setData] = useState([])
     const [loading, setLoading] = useState(true)
@@ -16,6 +22,9 @@ const Pitchers = () => {
         setTimeout(() => {
             setLoading(false)
         }, 3000)
+
+        if(error)
+            navigate("/sorry")
 
         const pito = pitchers.filter(pitch => userId.name == pitch.Name)
 
@@ -34,7 +43,7 @@ const Pitchers = () => {
     }
 
     return (
-        <div className="flex flex-col w-screen h-screen items-center justify-center gap-4">
+        <div className="flex flex-col w-screen h-screen items-center justify-center gap-4 relative">
             {
                 loading ? <LineWave
                             height="100"
@@ -49,6 +58,7 @@ const Pitchers = () => {
                             lastLineColor="red"
                             /> :
                             <>
+                            <FixedCounter/>
                                 <div className="player-head text-center">
                                     <h1 className='text-3xl font-bold'>{data.Name}</h1>
                                     <h3 className=' text-gray-400 text-xl'>{data.Team}</h3>

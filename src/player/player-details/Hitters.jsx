@@ -1,13 +1,19 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useParams } from 'react-router-dom'
 import { useState, useEffect } from 'react'
-import axios from 'axios'
 import { LineWave } from 'react-loader-spinner'
 import { hitters } from "../../data/hitters"
+import FixedCounter from '../../components/FixedCounter'
+import { useNavigate } from 'react-router-dom'
+import DataContext from '../../context/counterContext'
 
 const Hitters = () => {
 
     const userId = useParams()
+
+    const navigate = useNavigate()
+
+    const {error, setError} = useContext(DataContext)
 
     const [data, setData] = useState({})
     const [loading, setLoading] = useState(true)
@@ -17,6 +23,9 @@ const Hitters = () => {
         setTimeout(() => {
             setLoading(false)
         }, 3000)
+
+        if(error)
+            navigate("/sorry")
 
         const hito = hitters.filter(hit => hit.Name == userId.name)
 
@@ -35,7 +44,7 @@ const Hitters = () => {
     }
 
     return (
-        <div className="flex flex-col w-screen h-screen items-center justify-center gap-4">
+        <div className="flex flex-col w-screen h-screen items-center justify-center gap-4 relative">
             {
                 loading ? <LineWave
                             height="100"
@@ -50,6 +59,7 @@ const Hitters = () => {
                             lastLineColor="red"
                             /> :
                             <>
+                                <FixedCounter/>
                                 <div className="player-head text-center">
                                     <h1 className='text-3xl font-bold'>{data.Name}</h1>
                                     <h3 className=' text-gray-400 text-xl'>{data.Team}</h3>

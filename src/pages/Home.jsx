@@ -7,6 +7,7 @@ import { DataProvider } from '../context/counterContext';
 import DataContext from '../context/counterContext';
 import {hitters} from "../data/hitters"
 import { pitchers } from "../data/pitchers"
+import FixedCounter from '../components/FixedCounter';
 
 const Home = () => {
 
@@ -15,11 +16,11 @@ const Home = () => {
     const [search, setSearch] = useState([])
     const [route, setRoute] = useState("hitters")
     
-    const { counter, setCounter } = useContext(DataContext)
+    const { counter, setCounter, error, setError } = useContext(DataContext)
 
-    console.log("context ==> ",useContext(DataContext))
+    // console.log("context ==> ",useContext(DataContext))
 
-    // console.log("counter ==> ", counter)
+    console.log("counter ==> ", counter)
 
     useEffect(() => {
 
@@ -40,9 +41,22 @@ const Home = () => {
 
     }
 
+    const handleLimit = () => {
+        const rateLimit = async () => {
+            await fetch("http://localhost:3000/")
+                .then(response => response.json())
+                .catch(err => setError(true))
+        }
+
+        if (!error)
+            setCounter(counter + 1)
+
+        rateLimit()
+    }
+
   return (
-      <div className='flex h-screen w-screen items-center justify-center flex-col gap-5'>
-            <DataProvider>
+      <div className='flex h-screen w-screen items-center justify-center flex-col gap-5 relative'>
+        <FixedCounter/>
             <div className="navigation">
                 <ul className='flex items-start justify-start w-full gap-5 my-4'>
                     <li>
@@ -56,7 +70,7 @@ const Home = () => {
                 <div className="search--field flex items-center gap-2 border border-gray-300 rounded-lg p-3 bg-white mb-5">
                     <input type="text" placeholder='enter the name here' className= 'outline-none' onChange={(e) => handleSearch(e.target.value)} value={player} />
                 </div>
-                <Link to={`/${route}/${player.toString()}`} className='cursor-pointer p-2 py-4 bg-blue-800 hover:bg-blue-700 duration-200 text-white rounded-lg' onClick={() => setCounter(counter + 1)} >Generate</Link>
+                <Link to={error ? "/sorry" : `/${route}/${player.toString()}`} className='cursor-pointer p-2 py-4 bg-blue-800 hover:bg-blue-700 duration-200 text-white rounded-lg' onClick={handleLimit} >Generate</Link>
             </div>
             <div className="search--results h-full overflow-scroll text-start w-[278px] mt-4">
                 <ul>
@@ -69,7 +83,6 @@ const Home = () => {
                     }
                 </ul>
             </div>
-    </DataProvider>
         </div>
   )
 }

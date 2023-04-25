@@ -5,11 +5,10 @@ export const DataContext = createContext({})
 export const DataProvider = ({ children }) => {
 
     const [counter, setCounter] = useState(0)
-
-    console.log(counter)
+    const [error, setError] = useState(false)
 
     return (
-        <DataContext.Provider value={{counter, setCounter}} >
+        <DataContext.Provider value={{counter, setCounter, error, setError}} >
             {children}
         </DataContext.Provider>
     )
