@@ -25,7 +25,10 @@ const Pitchers = () => {
                     method: "post",
                     url: " https://4733-196-70-0-66.ngrok-free.app/pitchers",
                     headers: {
-                        "Content-Type": "application/json"
+                        "Content-Type": "application/json",
+                        "Access-Control-Allow-Origin": "*",
+                        "Access-Control-Allow-Methods": "*",
+                        "Access-Control-Allow-Headers": "*"
                     },
                     data: {
                         name: userId.name
