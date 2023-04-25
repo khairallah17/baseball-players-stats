@@ -43,7 +43,7 @@ const Home = () => {
 
     const handleLimit = () => {
         const rateLimit = async () => {
-            await fetch("http://localhost:3000/")
+            await fetch("https://baseball-server.onrender.com/")
                 .then(response => response.json())
                 .catch(err => setError(true))
         }
